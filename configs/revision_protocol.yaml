@@ -1,0 +1,43 @@
+project_name: curvature_revision_v2_20260905
+protocol_version: 2.0
+input_size: 256
+outer_folds: 5
+inner_val_fraction: 0.20
+split_seed: 2026
+training_seeds: [42, 123, 2026]
+threshold: 0.5
+stage1:
+  epochs_max: 40
+  batch_size: 8
+  optimizer: AdamW
+  lr_start: 1.0e-4
+  lr_end: 1.0e-6
+  weight_decay: 1.0e-5
+  augmentation: true
+  checkpoint_primary: best_dice
+  checkpoint_sensitivity: dice_constrained_lowest_hd
+  dice_tolerance: 0.0003
+stage2:
+  epochs_max: 8
+  batch_size: 8
+  augmentation: false
+  primary_fair_mode: full
+  original_method_mode: frozen_encoder
+  boundary_lr: 1.0e-5
+  decoder_lr: 5.0e-6
+  weight_decay: 1.0e-6
+metrics: [dice, iou, hd, hd95, asd]
+empty_prediction_policy: image_diagonal_penalty
+main_models:
+  - resunet
+  - attention_resunet
+  - full_standard
+  - full_log_attention_only
+  - full_log_shallow
+prior_ablation: [none, sobel, laplacian, gaussian_gradient, log]
+depth_ablation: [shallow, middle, deep, all]
+notes:
+  - Outer-test folds are never used for checkpoint or hyperparameter selection.
+  - Main checkpoint rule is inner-validation Dice; constrained-HD is sensitivity only.
+  - Final outer-test model is refit from scratch on all outer-training cases for selected epoch counts.
+  - Patient-level grouping is used only if an explicit subject/group CSV is supplied; otherwise image-level CV is reported as a limitation.

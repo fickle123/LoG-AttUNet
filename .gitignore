@@ -1,0 +1,56 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environments
+.venv/
+venv/
+env/
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# Model weights
+*.pth
+*.pt
+*.ckpt
+*.onnx
+
+# Experimental outputs
+outputs/
+output/
+runs/
+results/
+checkpoints/
+weights/
+predictions/
+figures/
+logs/
+
+# Arrays / generated metrics
+*.npy
+*.npz
+*.csv
+*.log
+
+# Images / rendered figures
+*.png
+*.jpg
+*.jpeg
+*.tif
+*.tiff
+*.pdf
+
+# Archives
+*.tar
+*.tar.gz
+*.zip
+
+# System
+.DS_Store
+Thumbs.db
